@@ -1,0 +1,261 @@
+#! /c/Source/iverilog-install/bin/vvp
+:ivl_version "12.0 (devel)" "(s20150603-1539-g2693dd32b)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "C:\iverilog\lib\ivl\system.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_sys.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_textio.vpi";
+:vpi_module "C:\iverilog\lib\ivl\v2005_math.vpi";
+:vpi_module "C:\iverilog\lib\ivl\va_math.vpi";
+S_0000012725ef58f0 .scope module, "baud_tb" "baud_tb" 2 5;
+ .timescale -9 -12;
+v0000012725f546c0_0 .var "clk", 0 0;
+v0000012725f54760_0 .var "dlf_val", 15 0;
+v0000012725f55950_0 .var "dlh_val", 15 0;
+v0000012725f567b0_0 .var "dll_val", 15 0;
+v0000012725f55590_0 .var "os_sel", 1 0;
+v0000012725f54e10_0 .net "oversample_factor", 4 0, v0000012725ec2930_0;  1 drivers
+v0000012725f55310_0 .net "oversample_tick", 0 0, v0000012725f54300_0;  1 drivers
+v0000012725f54eb0_0 .var "rst", 0 0;
+v0000012725f55ef0_0 .var/i "start_time", 31 0;
+v0000012725f55450_0 .var/i "tick_count", 31 0;
+E_0000012725ee7dc0 .event posedge, v0000012725f54300_0;
+S_0000012725ef5a80 .scope module, "uut" "baudrategenerator" 2 13, 3 1 0, S_0000012725ef58f0;
+ .timescale -9 -12;
+    .port_info 0 /INPUT 1 "clk";
+    .port_info 1 /INPUT 1 "rst";
+    .port_info 2 /INPUT 16 "dll_val";
+    .port_info 3 /INPUT 16 "dlh_val";
+    .port_info 4 /INPUT 16 "dlf_val";
+    .port_info 5 /INPUT 2 "os_sel";
+    .port_info 6 /OUTPUT 1 "oversample_tick";
+    .port_info 7 /OUTPUT 5 "oversample_factor";
+P_0000012725ee7c80 .param/l "CLOCK_FREQUENCY" 0 3 2, +C4<00000101111101011110000100000000>;
+v0000012725ec2d00_0 .net *"_ivl_1", 7 0, L_0000012725f56170;  1 drivers
+L_0000012725f568d8 .functor BUFT 1, C4<000000000000000000000000000>, C4<0>, C4<0>, C4<0>;
+v0000012725eecde0_0 .net *"_ivl_11", 26 0, L_0000012725f568d8;  1 drivers
+v0000012725f53b80_0 .net *"_ivl_12", 31 0, L_0000012725f556d0;  1 drivers
+L_0000012725f56920 .functor BUFT 1, C4<0000000000000000000000000000>, C4<0>, C4<0>, C4<0>;
+v0000012725f53c20_0 .net *"_ivl_15", 27 0, L_0000012725f56920;  1 drivers
+v0000012725f53ae0_0 .net *"_ivl_16", 31 0, L_0000012725f56350;  1 drivers
+L_0000012725f56968 .functor BUFT 1, C4<00000000000000000000000000010000>, C4<0>, C4<0>, C4<0>;
+v0000012725f539a0_0 .net/2u *"_ivl_18", 31 0, L_0000012725f56968;  1 drivers
+L_0000012725f569b0 .functor BUFT 1, C4<0000000000000001>, C4<0>, C4<0>, C4<0>;
+v0000012725f53a40_0 .net/2u *"_ivl_22", 15 0, L_0000012725f569b0;  1 drivers
+L_0000012725f569f8 .functor BUFT 1, C4<0000000000000000>, C4<0>, C4<0>, C4<0>;
+v0000012725f53900_0 .net/2u *"_ivl_24", 15 0, L_0000012725f569f8;  1 drivers
+v0000012725f541c0_0 .net *"_ivl_26", 15 0, L_0000012725f559f0;  1 drivers
+v0000012725f544e0_0 .net *"_ivl_3", 7 0, L_0000012725f55270;  1 drivers
+v0000012725f53ea0_0 .net *"_ivl_8", 31 0, L_0000012725f551d0;  1 drivers
+v0000012725f53cc0_0 .net "clk", 0 0, v0000012725f546c0_0;  1 drivers
+v0000012725f54080_0 .var "count", 15 0;
+v0000012725f54440_0 .net "divider_frac", 3 0, L_0000012725f55630;  1 drivers
+v0000012725f53fe0_0 .net "divider_int", 15 0, L_0000012725f558b0;  1 drivers
+v0000012725f54120_0 .net "dlf_val", 15 0, v0000012725f54760_0;  1 drivers
+v0000012725f54580_0 .net "dlh_val", 15 0, v0000012725f55950_0;  1 drivers
+v0000012725f54620_0 .net "dll_val", 15 0, v0000012725f567b0_0;  1 drivers
+v0000012725f53d60_0 .net "effective_divider", 15 0, L_0000012725f54f50;  1 drivers
+v0000012725f53e00_0 .var "frac_accum", 4 0;
+v0000012725f54800_0 .net "frac_carry", 0 0, L_0000012725f55770;  1 drivers
+v0000012725f54260_0 .net "os_sel", 1 0, v0000012725f55590_0;  1 drivers
+v0000012725f53f40_0 .net "oversample_factor", 4 0, v0000012725ec2930_0;  alias, 1 drivers
+v0000012725f54300_0 .var "oversample_tick", 0 0;
+v0000012725f543a0_0 .net "rst", 0 0, v0000012725f54eb0_0;  1 drivers
+E_0000012725ee7e80 .event posedge, v0000012725f53cc0_0;
+L_0000012725f56170 .part v0000012725f55950_0, 0, 8;
+L_0000012725f55270 .part v0000012725f567b0_0, 0, 8;
+L_0000012725f558b0 .concat [ 8 8 0 0], L_0000012725f55270, L_0000012725f56170;
+L_0000012725f55630 .part v0000012725f54760_0, 0, 4;
+L_0000012725f551d0 .concat [ 5 27 0 0], v0000012725f53e00_0, L_0000012725f568d8;
+L_0000012725f556d0 .concat [ 4 28 0 0], L_0000012725f55630, L_0000012725f56920;
+L_0000012725f56350 .arith/sum 32, L_0000012725f551d0, L_0000012725f556d0;
+L_0000012725f55770 .cmp/ge 32, L_0000012725f56350, L_0000012725f56968;
+L_0000012725f559f0 .functor MUXZ 16, L_0000012725f569f8, L_0000012725f569b0, L_0000012725f55770, C4<>;
+L_0000012725f54f50 .arith/sum 16, L_0000012725f558b0, L_0000012725f559f0;
+S_0000012725efb490 .scope module, "u_os_decoder" "os_sel_decoder" 3 22, 4 1 0, S_0000012725ef5a80;
+ .timescale -9 -12;
+    .port_info 0 /INPUT 2 "os_sel";
+    .port_info 1 /OUTPUT 5 "oversample_factor";
+v0000012725eeca80_0 .net "os_sel", 1 0, v0000012725f55590_0;  alias, 1 drivers
+v0000012725ec2930_0 .var "oversample_factor", 4 0;
+E_0000012725ee8240 .event anyedge, v0000012725eeca80_0;
+    .scope S_0000012725efb490;
+T_0 ;
+    %wait E_0000012725ee8240;
+    %load/vec4 v0000012725eeca80_0;
+    %dup/vec4;
+    %pushi/vec4 0, 0, 2;
+    %cmp/u;
+    %jmp/1 T_0.0, 6;
+    %dup/vec4;
+    %pushi/vec4 1, 0, 2;
+    %cmp/u;
+    %jmp/1 T_0.1, 6;
+    %dup/vec4;
+    %pushi/vec4 2, 0, 2;
+    %cmp/u;
+    %jmp/1 T_0.2, 6;
+    %dup/vec4;
+    %pushi/vec4 3, 0, 2;
+    %cmp/u;
+    %jmp/1 T_0.3, 6;
+    %jmp T_0.4;
+T_0.0 ;
+    %pushi/vec4 16, 0, 5;
+    %store/vec4 v0000012725ec2930_0, 0, 5;
+    %jmp T_0.4;
+T_0.1 ;
+    %pushi/vec4 8, 0, 5;
+    %store/vec4 v0000012725ec2930_0, 0, 5;
+    %jmp T_0.4;
+T_0.2 ;
+    %pushi/vec4 4, 0, 5;
+    %store/vec4 v0000012725ec2930_0, 0, 5;
+    %jmp T_0.4;
+T_0.3 ;
+    %pushi/vec4 3, 0, 5;
+    %store/vec4 v0000012725ec2930_0, 0, 5;
+    %jmp T_0.4;
+T_0.4 ;
+    %pop/vec4 1;
+    %jmp T_0;
+    .thread T_0, $push;
+    .scope S_0000012725ef5a80;
+T_1 ;
+    %wait E_0000012725ee7e80;
+    %load/vec4 v0000012725f543a0_0;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_1.0, 8;
+    %pushi/vec4 0, 0, 16;
+    %assign/vec4 v0000012725f54080_0, 0;
+    %pushi/vec4 0, 0, 5;
+    %assign/vec4 v0000012725f53e00_0, 0;
+    %pushi/vec4 0, 0, 1;
+    %assign/vec4 v0000012725f54300_0, 0;
+    %jmp T_1.1;
+T_1.0 ;
+    %load/vec4 v0000012725f54080_0;
+    %pad/u 32;
+    %load/vec4 v0000012725f53d60_0;
+    %pad/u 32;
+    %subi 1, 0, 32;
+    %cmp/e;
+    %jmp/0xz  T_1.2, 4;
+    %pushi/vec4 0, 0, 16;
+    %assign/vec4 v0000012725f54080_0, 0;
+    %pushi/vec4 1, 0, 1;
+    %assign/vec4 v0000012725f54300_0, 0;
+    %load/vec4 v0000012725f54800_0;
+    %flag_set/vec4 8;
+    %jmp/0 T_1.4, 8;
+    %load/vec4 v0000012725f53e00_0;
+    %pad/u 6;
+    %load/vec4 v0000012725f54440_0;
+    %pad/u 6;
+    %add;
+    %subi 16, 0, 6;
+    %jmp/1 T_1.5, 8;
+T_1.4 ; End of true expr.
+    %load/vec4 v0000012725f53e00_0;
+    %pad/u 6;
+    %load/vec4 v0000012725f54440_0;
+    %pad/u 6;
+    %add;
+    %jmp/0 T_1.5, 8;
+ ; End of false expr.
+    %blend;
+T_1.5;
+    %pad/u 5;
+    %assign/vec4 v0000012725f53e00_0, 0;
+    %jmp T_1.3;
+T_1.2 ;
+    %load/vec4 v0000012725f54080_0;
+    %addi 1, 0, 16;
+    %assign/vec4 v0000012725f54080_0, 0;
+    %pushi/vec4 0, 0, 1;
+    %assign/vec4 v0000012725f54300_0, 0;
+T_1.3 ;
+T_1.1 ;
+    %jmp T_1;
+    .thread T_1;
+    .scope S_0000012725ef58f0;
+T_2 ;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000012725f546c0_0, 0, 1;
+    %end;
+    .thread T_2;
+    .scope S_0000012725ef58f0;
+T_3 ;
+    %delay 5000, 0;
+    %load/vec4 v0000012725f546c0_0;
+    %inv;
+    %store/vec4 v0000012725f546c0_0, 0, 1;
+    %jmp T_3;
+    .thread T_3;
+    .scope S_0000012725ef58f0;
+T_4 ;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000012725f54eb0_0, 0, 1;
+    %pushi/vec4 0, 0, 16;
+    %store/vec4 v0000012725f567b0_0, 0, 16;
+    %pushi/vec4 0, 0, 16;
+    %store/vec4 v0000012725f55950_0, 0, 16;
+    %pushi/vec4 0, 0, 16;
+    %store/vec4 v0000012725f54760_0, 0, 16;
+    %pushi/vec4 0, 0, 2;
+    %store/vec4 v0000012725f55590_0, 0, 2;
+    %delay 20000, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000012725f54eb0_0, 0, 1;
+    %pushi/vec4 54, 0, 16;
+    %store/vec4 v0000012725f567b0_0, 0, 16;
+    %pushi/vec4 0, 0, 16;
+    %store/vec4 v0000012725f55950_0, 0, 16;
+    %pushi/vec4 4, 0, 16;
+    %store/vec4 v0000012725f54760_0, 0, 16;
+    %pushi/vec4 0, 0, 2;
+    %store/vec4 v0000012725f55590_0, 0, 2;
+    %vpi_call 2 39 "$display", "oversample_factor = %d (expect 16)", v0000012725f54e10_0 {0 0 0};
+    %pushi/vec4 0, 0, 32;
+    %store/vec4 v0000012725f55450_0, 0, 32;
+    %pushi/vec4 0, 0, 32;
+    %store/vec4 v0000012725f55ef0_0, 0, 32;
+    %wait E_0000012725ee7dc0;
+    %vpi_func 2 46 "$time" 64 {0 0 0};
+    %pad/u 32;
+    %store/vec4 v0000012725f55ef0_0, 0, 32;
+    %pushi/vec4 100, 0, 32;
+T_4.0 %dup/vec4;
+    %pushi/vec4 0, 0, 32;
+    %cmp/s;
+    %jmp/1xz T_4.1, 5;
+    %jmp/1 T_4.1, 4;
+    %pushi/vec4 1, 0, 32;
+    %sub;
+    %wait E_0000012725ee7dc0;
+    %jmp T_4.0;
+T_4.1 ;
+    %pop/vec4 1;
+    %vpi_func 2 51 "$time" 64 {0 0 0};
+    %load/vec4 v0000012725f55ef0_0;
+    %pad/u 64;
+    %sub;
+    %vpi_func 2 51 "$time" 64 {0 0 0};
+    %load/vec4 v0000012725f55ef0_0;
+    %pad/u 64;
+    %sub;
+    %pushi/vec4 100, 0, 64;
+    %div;
+    %vpi_call 2 50 "$display", "100 ticks took %0d ns, average = %0d ns/tick", S<1,vec4,u64>, S<0,vec4,u64> {2 0 0};
+    %vpi_call 2 52 "$display", "expected average ~540ns (54.25 cycles * 10ns/cycle = 542.5ns)" {0 0 0};
+    %delay 1000000, 0;
+    %vpi_call 2 54 "$finish" {0 0 0};
+    %end;
+    .thread T_4;
+# The file index is used to find the file name in the following table.
+:file_names 5;
+    "N/A";
+    "<interactive>";
+    ".\baudratetb.v";
+    "./baudrategenerator.v";
+    "./os_sel_decoder.v";

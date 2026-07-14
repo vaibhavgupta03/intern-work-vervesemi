@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - uart-ip/baudrategenerator.v</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="title">LCOV - code coverage report</td></tr>
+            <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+            <tr>
+              <td width="100%">
+                <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="10%" class="headerValue"><a href="../index.html" title="Click to go to top-level">top level</a> - <a href="index.html" title="Click to go to directory uart-ip">uart-ip</a> - baudrategenerator.v</td>
+            <td width="5%"></td>
+            <td width="5%"></td>
+            <td width="5%" class="headerCovTableHead">Coverage</td>
+            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
+            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
+            <td class="headerCovTableEntry">27</td>
+            <td class="headerCovTableEntry">27</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test Date:</td>
+            <td class="headerValue">2026-07-12 12:22:51</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntryHi">-</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+          </tr>
+                  <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+          </table>
+
+          <table cellpadding=0 cellspacing=0 border=0>
+            <tr>
+              <td><br></td>
+            </tr>
+            <tr>
+              <td>
+<pre class="sourceHeading">            Line data    Source code</pre>
+<pre class="source">
+<span id="L1"><span class="lineNum">       1</span>              : `timescale 1ns/1ps</span>
+<span id="L2"><span class="lineNum">       2</span>              : module baudrategenerator #(</span>
+<span id="L3"><span class="lineNum">       3</span>              :     parameter CLOCK_FREQUENCY = 100_000_000</span>
+<span id="L4"><span class="lineNum">       4</span>              : )(</span>
+<span id="L5"><span class="lineNum">       5</span> <span class="tlaGNC">      748703 :     input  wire        clk,</span></span>
+<span id="L6"><span class="lineNum">       6</span> <span class="tlaGNC">           3 :     input  wire        rst,</span></span>
+<span id="L7"><span class="lineNum">       7</span> <span class="tlaGNC">           2 :     input  wire [15:0] dll_val,</span></span>
+<span id="L8"><span class="lineNum">       8</span> <span class="tlaGNC">           2 :     input  wire [15:0] dlh_val,</span></span>
+<span id="L9"><span class="lineNum">       9</span> <span class="tlaGNC">           2 :     input  wire [15:0] dlf_val,</span></span>
+<span id="L10"><span class="lineNum">      10</span> <span class="tlaGNC">           4 :     input  wire [1:0]  os_sel,</span></span>
+<span id="L11"><span class="lineNum">      11</span>              : </span>
+<span id="L12"><span class="lineNum">      12</span> <span class="tlaGNC">       11384 :     output reg          oversample_tick,</span></span>
+<span id="L13"><span class="lineNum">      13</span> <span class="tlaGNC">           5 :     output wire [4:0]    oversample_factor   // NEW — Tx/Rx need this</span></span>
+<span id="L14"><span class="lineNum">      14</span>              : );</span>
+<span id="L15"><span class="lineNum">      15</span>              : </span>
+<span id="L16"><span class="lineNum">      16</span>              :     // ── combine DLL/DLH into one 16-bit integer divider ───────</span>
+<span id="L17"><span class="lineNum">      17</span> <span class="tlaGNC">           2 :     wire [15:0] divider_int = {dlh_val[7:0], dll_val[7:0]};</span></span>
+<span id="L18"><span class="lineNum">      18</span>              : </span>
+<span id="L19"><span class="lineNum">      19</span>              :     // ── pull out the fractional divider piece ─────────────────</span>
+<span id="L20"><span class="lineNum">      20</span> <span class="tlaGNC">           2 :     wire [3:0] divider_frac = dlf_val[3:0];</span></span>
+<span id="L21"><span class="lineNum">      21</span>              : </span>
+<span id="L22"><span class="lineNum">      22</span>              :     // ── decode os_sel into the real oversample factor ─────────</span>
+<span id="L23"><span class="lineNum">      23</span>              :     os_sel_decoder u_os_decoder (</span>
+<span id="L24"><span class="lineNum">      24</span>              :         .os_sel(os_sel),</span>
+<span id="L25"><span class="lineNum">      25</span>              :         .oversample_factor(oversample_factor)</span>
+<span id="L26"><span class="lineNum">      26</span>              :     );</span>
+<span id="L27"><span class="lineNum">      27</span>              : </span>
+<span id="L28"><span class="lineNum">      28</span>              :     // ── fractional accumulator ─────────────────────────────────</span>
+<span id="L29"><span class="lineNum">      29</span>              :     // every cycle, add divider_frac to this accumulator</span>
+<span id="L30"><span class="lineNum">      30</span>              :     // when it overflows past 15, steal 1 extra cycle this round</span>
+<span id="L31"><span class="lineNum">      31</span>              :     // this is what &quot;dithers&quot; the average divider between</span>
+<span id="L32"><span class="lineNum">      32</span>              :     // divider_int and divider_int+1</span>
+<span id="L33"><span class="lineNum">      33</span> <span class="tlaGNC">        5692 :     reg [4:0] frac_accum;</span></span>
+<span id="L34"><span class="lineNum">      34</span> <span class="tlaGNC">        2846 :     wire      frac_carry = (frac_accum + divider_frac) &gt;= 16;</span></span>
+<span id="L35"><span class="lineNum">      35</span>              : </span>
+<span id="L36"><span class="lineNum">      36</span>              :     // ── main tick counter ──────────────────────────────────────</span>
+<span id="L37"><span class="lineNum">      37</span> <span class="tlaGNC">      372916 :     reg [15:0] count;</span></span>
+<span id="L38"><span class="lineNum">      38</span>              : </span>
+<span id="L39"><span class="lineNum">      39</span>              :     // effective divider for THIS cycle (either divider_int or +1)</span>
+<span id="L40"><span class="lineNum">      40</span> <span class="tlaGNC">        2848 :     wire [15:0] effective_divider = divider_int + (frac_carry ? 1 : 0);</span></span>
+<span id="L41"><span class="lineNum">      41</span>              : </span>
+<span id="L42"><span class="lineNum">      42</span> <span class="tlaGNC">      374351 :     always @(posedge clk) begin</span></span>
+<span id="L43"><span class="lineNum">      43</span> <span class="tlaGNC">          12 :         if (rst) begin</span></span>
+<span id="L44"><span class="lineNum">      44</span> <span class="tlaGNC">          12 :             count           &lt;= 0;</span></span>
+<span id="L45"><span class="lineNum">      45</span> <span class="tlaGNC">          12 :             frac_accum      &lt;= 0;</span></span>
+<span id="L46"><span class="lineNum">      46</span> <span class="tlaGNC">          12 :             oversample_tick &lt;= 0;</span></span>
+<span id="L47"><span class="lineNum">      47</span>              :         end</span>
+<span id="L48"><span class="lineNum">      48</span> <span class="tlaGNC">      368647 :         else if (count == (effective_divider - 1)) begin</span></span>
+<span id="L49"><span class="lineNum">      49</span> <span class="tlaGNC">        5692 :             count           &lt;= 0;</span></span>
+<span id="L50"><span class="lineNum">      50</span> <span class="tlaGNC">        5692 :             oversample_tick &lt;= 1;</span></span>
+<span id="L51"><span class="lineNum">      51</span>              :             // update the fractional accumulator for next time</span>
+<span id="L52"><span class="lineNum">      52</span> <span class="tlaGNC">        5692 :             frac_accum      &lt;= frac_carry ? (frac_accum + divider_frac - 16)</span></span>
+<span id="L53"><span class="lineNum">      53</span> <span class="tlaGNC">        5692 :                                             : (frac_accum + divider_frac);</span></span>
+<span id="L54"><span class="lineNum">      54</span>              :         end</span>
+<span id="L55"><span class="lineNum">      55</span> <span class="tlaGNC">      368647 :         else begin</span></span>
+<span id="L56"><span class="lineNum">      56</span> <span class="tlaGNC">      368647 :             count           &lt;= count + 1;</span></span>
+<span id="L57"><span class="lineNum">      57</span> <span class="tlaGNC">      368647 :             oversample_tick &lt;= 0;</span></span>
+<span id="L58"><span class="lineNum">      58</span>              :         end</span>
+<span id="L59"><span class="lineNum">      59</span>              :     end</span>
+<span id="L60"><span class="lineNum">      60</span>              : </span>
+<span id="L61"><span class="lineNum">      61</span>              : endmodule</span>
+        </pre>
+              </td>
+            </tr>
+          </table>
+          <br>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.0-1</a></td></tr>
+          </table>
+          <br>
+
+</body>
+</html>

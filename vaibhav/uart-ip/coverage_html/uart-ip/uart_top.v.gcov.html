@@ -1,0 +1,295 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - uart-ip/uart_top.v</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="title">LCOV - code coverage report</td></tr>
+            <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+            <tr>
+              <td width="100%">
+                <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="10%" class="headerValue"><a href="../index.html" title="Click to go to top-level">top level</a> - <a href="index.html" title="Click to go to directory uart-ip">uart-ip</a> - uart_top.v</td>
+            <td width="5%"></td>
+            <td width="5%"></td>
+            <td width="5%" class="headerCovTableHead">Coverage</td>
+            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
+            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
+            <td class="headerCovTableEntry">58</td>
+            <td class="headerCovTableEntry">58</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test Date:</td>
+            <td class="headerValue">2026-07-05 14:42:24</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntryHi">-</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+          </tr>
+                  <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+          </table>
+
+          <table cellpadding=0 cellspacing=0 border=0>
+            <tr>
+              <td><br></td>
+            </tr>
+            <tr>
+              <td>
+<pre class="sourceHeading">            Line data    Source code</pre>
+<pre class="source">
+<span id="L1"><span class="lineNum">       1</span>              : `timescale 1ns/1ps</span>
+<span id="L2"><span class="lineNum">       2</span>              : </span>
+<span id="L3"><span class="lineNum">       3</span>              : module uart_top #(</span>
+<span id="L4"><span class="lineNum">       4</span>              :     parameter AXI_ADDR_WIDTH = 32,</span>
+<span id="L5"><span class="lineNum">       5</span>              :     parameter AXI_DATA_WIDTH = 32,</span>
+<span id="L6"><span class="lineNum">       6</span>              :     parameter CLOCK_FREQUENCY = 100_000_000</span>
+<span id="L7"><span class="lineNum">       7</span>              : )(</span>
+<span id="L8"><span class="lineNum">       8</span> <span class="tlaGNC">      748703 :     input  wire                       clk,</span></span>
+<span id="L9"><span class="lineNum">       9</span> <span class="tlaGNC">           3 :     input  wire                       rst,</span></span>
+<span id="L10"><span class="lineNum">      10</span>              : </span>
+<span id="L11"><span class="lineNum">      11</span>              :     // ── Physical UART Pins ────────────────────────────────</span>
+<span id="L12"><span class="lineNum">      12</span> <span class="tlaGNC">         768 :     input  wire                       rx,</span></span>
+<span id="L13"><span class="lineNum">      13</span> <span class="tlaGNC">         767 :     output wire                       tx,</span></span>
+<span id="L14"><span class="lineNum">      14</span>              : </span>
+<span id="L15"><span class="lineNum">      15</span>              :     // ── AXI4-Lite Write Address Channel ───────────────────</span>
+<span id="L16"><span class="lineNum">      16</span> <span class="tlaGNC">         357 :     input  wire [AXI_ADDR_WIDTH-1:0]  s_awaddr,</span></span>
+<span id="L17"><span class="lineNum">      17</span> <span class="tlaGNC">         734 :     input  wire                       s_awvalid,</span></span>
+<span id="L18"><span class="lineNum">      18</span> <span class="tlaGNC">         734 :     output wire                       s_awready,</span></span>
+<span id="L19"><span class="lineNum">      19</span>              : </span>
+<span id="L20"><span class="lineNum">      20</span>              :     // ── AXI4-Lite Write Data Channel ──────────────────────</span>
+<span id="L21"><span class="lineNum">      21</span> <span class="tlaGNC">         198 :     input  wire [AXI_DATA_WIDTH-1:0]  s_wdata,</span></span>
+<span id="L22"><span class="lineNum">      22</span> <span class="tlaGNC">           1 :     input  wire [3:0]                 s_wstrb,</span></span>
+<span id="L23"><span class="lineNum">      23</span> <span class="tlaGNC">         734 :     input  wire                       s_wvalid,</span></span>
+<span id="L24"><span class="lineNum">      24</span> <span class="tlaGNC">         734 :     output wire                       s_wready,</span></span>
+<span id="L25"><span class="lineNum">      25</span>              : </span>
+<span id="L26"><span class="lineNum">      26</span>              :     // ── AXI4-Lite Write Response Channel ──────────────────</span>
+<span id="L27"><span class="lineNum">      27</span> <span class="tlaGNC">           2 :     output wire [1:0]                 s_bresp,</span></span>
+<span id="L28"><span class="lineNum">      28</span> <span class="tlaGNC">         734 :     output wire                       s_bvalid,</span></span>
+<span id="L29"><span class="lineNum">      29</span> <span class="tlaGNC">         376 :     input  wire                       s_bready,</span></span>
+<span id="L30"><span class="lineNum">      30</span>              : </span>
+<span id="L31"><span class="lineNum">      31</span>              :     // ── AXI4-Lite Read Address Channel ────────────────────</span>
+<span id="L32"><span class="lineNum">      32</span> <span class="tlaGNC">          19 :     input  wire [AXI_ADDR_WIDTH-1:0]  s_araddr,</span></span>
+<span id="L33"><span class="lineNum">      33</span> <span class="tlaGNC">          40 :     input  wire                       s_arvalid,</span></span>
+<span id="L34"><span class="lineNum">      34</span> <span class="tlaGNC">          40 :     output wire                       s_arready,</span></span>
+<span id="L35"><span class="lineNum">      35</span>              : </span>
+<span id="L36"><span class="lineNum">      36</span>              :     // ── AXI4-Lite Read Data Channel ───────────────────────</span>
+<span id="L37"><span class="lineNum">      37</span> <span class="tlaGNC">          12 :     output wire [AXI_DATA_WIDTH-1:0]  s_rdata,</span></span>
+<span id="L38"><span class="lineNum">      38</span> <span class="tlaGNC">           2 :     output wire [1:0]                 s_rresp,</span></span>
+<span id="L39"><span class="lineNum">      39</span> <span class="tlaGNC">          40 :     output wire                       s_rvalid,</span></span>
+<span id="L40"><span class="lineNum">      40</span> <span class="tlaGNC">          36 :     input  wire                       s_rready</span></span>
+<span id="L41"><span class="lineNum">      41</span>              : );</span>
+<span id="L42"><span class="lineNum">      42</span>              : </span>
+<span id="L43"><span class="lineNum">      43</span>              :     // ── Internal Interconnect Wires ───────────────────────</span>
+<span id="L44"><span class="lineNum">      44</span> <span class="tlaGNC">         734 :     wire        regfile_wr_en;</span></span>
+<span id="L45"><span class="lineNum">      45</span> <span class="tlaGNC">         356 :     wire [4:0]  regfile_wr_addr;</span></span>
+<span id="L46"><span class="lineNum">      46</span> <span class="tlaGNC">         198 :     wire [15:0] regfile_wr_data;</span></span>
+<span id="L47"><span class="lineNum">      47</span> <span class="tlaGNC">          18 :     wire [4:0]  regfile_rd_addr;</span></span>
+<span id="L48"><span class="lineNum">      48</span> <span class="tlaGNC">          12 :     wire [15:0] regfile_rd_data;</span></span>
+<span id="L49"><span class="lineNum">      49</span> <span class="tlaGNC">           4 :     wire [15:0] clk_val; </span></span>
+<span id="L50"><span class="lineNum">      50</span>              : </span>
+<span id="L51"><span class="lineNum">      51</span>              :     // Register Output Configuration Values</span>
+<span id="L52"><span class="lineNum">      52</span> <span class="tlaGNC">          88 :     wire [15:0] thr_val;</span></span>
+<span id="L53"><span class="lineNum">      53</span> <span class="tlaGNC">           2 :     wire [15:0] dll_val;</span></span>
+<span id="L54"><span class="lineNum">      54</span> <span class="tlaGNC">           2 :     wire [15:0] dlh_val;</span></span>
+<span id="L55"><span class="lineNum">      55</span> <span class="tlaGNC">           2 :     wire [15:0] dlf_val;</span></span>
+<span id="L56"><span class="lineNum">      56</span> <span class="tlaGNC">          86 :     wire [15:0] lcr_val;</span></span>
+<span id="L57"><span class="lineNum">      57</span>              : </span>
+<span id="L58"><span class="lineNum">      58</span>              :     // Baud Rate Generator Wires</span>
+<span id="L59"><span class="lineNum">      59</span> <span class="tlaGNC">       11384 :     wire        oversample_tick;</span></span>
+<span id="L60"><span class="lineNum">      60</span> <span class="tlaGNC">           5 :     wire [4:0]  oversample_factor;</span></span>
+<span id="L61"><span class="lineNum">      61</span>              : </span>
+<span id="L62"><span class="lineNum">      62</span>              :     // ── 1. Instance: AXI4-Lite Slave Bus Protocol Wrapper ──</span>
+<span id="L63"><span class="lineNum">      63</span>              :     axi4lite_slave #(</span>
+<span id="L64"><span class="lineNum">      64</span>              :         .AXI_ADDR_WIDTH(AXI_ADDR_WIDTH),</span>
+<span id="L65"><span class="lineNum">      65</span>              :         .AXI_DATA_WIDTH(AXI_DATA_WIDTH)</span>
+<span id="L66"><span class="lineNum">      66</span>              :     ) u_axi_slave (</span>
+<span id="L67"><span class="lineNum">      67</span>              :         .clk(clk), .rst(rst),</span>
+<span id="L68"><span class="lineNum">      68</span>              :         .s_awaddr(s_awaddr), .s_awvalid(s_awvalid), .s_awready(s_awready),</span>
+<span id="L69"><span class="lineNum">      69</span>              :         .s_wdata(s_wdata), .s_wstrb(s_wstrb), .s_wvalid(s_wvalid), .s_wready(s_wready),</span>
+<span id="L70"><span class="lineNum">      70</span>              :         .s_bresp(s_bresp), .s_bvalid(s_bvalid), .s_bready(s_bready),</span>
+<span id="L71"><span class="lineNum">      71</span>              :         .s_araddr(s_araddr), .s_arvalid(s_arvalid), .s_arready(s_arready),</span>
+<span id="L72"><span class="lineNum">      72</span>              :         .s_rdata(s_rdata), .s_rresp(s_rresp), .s_rvalid(s_rvalid), .s_rready(s_rready),</span>
+<span id="L73"><span class="lineNum">      73</span>              :         </span>
+<span id="L74"><span class="lineNum">      74</span>              :         .regfile_wr_en(regfile_wr_en),</span>
+<span id="L75"><span class="lineNum">      75</span>              :         .regfile_wr_addr(regfile_wr_addr),</span>
+<span id="L76"><span class="lineNum">      76</span>              :         .regfile_wr_data(regfile_wr_data),</span>
+<span id="L77"><span class="lineNum">      77</span>              :         .regfile_rd_addr(regfile_rd_addr),</span>
+<span id="L78"><span class="lineNum">      78</span>              :         .regfile_rd_data(regfile_rd_data)</span>
+<span id="L79"><span class="lineNum">      79</span>              :     );</span>
+<span id="L80"><span class="lineNum">      80</span>              : </span>
+<span id="L81"><span class="lineNum">      81</span>              :     // ── 2. Instance: Unified Config Register File ──────────</span>
+<span id="L82"><span class="lineNum">      82</span>              :     uart_regfile u_regfile (</span>
+<span id="L83"><span class="lineNum">      83</span>              :         .clk(clk), .rst(rst),</span>
+<span id="L84"><span class="lineNum">      84</span>              :         .wr_en(regfile_wr_en),</span>
+<span id="L85"><span class="lineNum">      85</span>              :         .addr(regfile_wr_addr),</span>
+<span id="L86"><span class="lineNum">      86</span>              :         .wr_data(regfile_wr_data),</span>
+<span id="L87"><span class="lineNum">      87</span>              :         .rd_addr(regfile_rd_addr),</span>
+<span id="L88"><span class="lineNum">      88</span>              :         .rd_data(regfile_rd_data),</span>
+<span id="L89"><span class="lineNum">      89</span>              : </span>
+<span id="L90"><span class="lineNum">      90</span>              :         .thr_val(thr_val),</span>
+<span id="L91"><span class="lineNum">      91</span>              :         .dll_val(dll_val),</span>
+<span id="L92"><span class="lineNum">      92</span>              :         .dlh_val(dlh_val),</span>
+<span id="L93"><span class="lineNum">      93</span>              :         .dlf_val(dlf_val),</span>
+<span id="L94"><span class="lineNum">      94</span>              :         .lcr_val(lcr_val),</span>
+<span id="L95"><span class="lineNum">      95</span>              :         </span>
+<span id="L96"><span class="lineNum">      96</span>              :         .rbr_val(), .ier_val(), .iir_val(), .fcr_val(), </span>
+<span id="L97"><span class="lineNum">      97</span>              :         .mcr_val(), .lsr_val(), .msr_val(), .mode_val(), </span>
+<span id="L98"><span class="lineNum">      98</span>              :         .clk_val(clk_val), .rxthr_val(), .txthr_val(), .timeout_val()</span>
+<span id="L99"><span class="lineNum">      99</span>              :     );</span>
+<span id="L100"><span class="lineNum">     100</span>              : </span>
+<span id="L101"><span class="lineNum">     101</span>              :     // ── 3. Instance: Clock Divider / Baud Rate Generator ───</span>
+<span id="L102"><span class="lineNum">     102</span>              :     baudrategenerator #(</span>
+<span id="L103"><span class="lineNum">     103</span>              :         .CLOCK_FREQUENCY(CLOCK_FREQUENCY)</span>
+<span id="L104"><span class="lineNum">     104</span>              :     ) u_baud_gen (</span>
+<span id="L105"><span class="lineNum">     105</span>              :         .clk(clk),</span>
+<span id="L106"><span class="lineNum">     106</span>              :         .rst(rst),</span>
+<span id="L107"><span class="lineNum">     107</span>              :         .dll_val(dll_val),</span>
+<span id="L108"><span class="lineNum">     108</span>              :         .dlh_val(dlh_val),</span>
+<span id="L109"><span class="lineNum">     109</span>              :         .dlf_val(dlf_val),</span>
+<span id="L110"><span class="lineNum">     110</span>              :         .os_sel(clk_val[3:2]), </span>
+<span id="L111"><span class="lineNum">     111</span>              :         .oversample_tick(oversample_tick),</span>
+<span id="L112"><span class="lineNum">     112</span>              :         .oversample_factor(oversample_factor)</span>
+<span id="L113"><span class="lineNum">     113</span>              :     );</span>
+<span id="L114"><span class="lineNum">     114</span>              : </span>
+<span id="L115"><span class="lineNum">     115</span>              :     // ── 4. Instance: UART Serial Transmitter (Tx) ──────────</span>
+<span id="L116"><span class="lineNum">     116</span> <span class="tlaGNC">         342 :     wire tx_start_pulse = regfile_wr_en &amp;&amp; (regfile_wr_addr == 5'h00) &amp;&amp; (lcr_val[9] == 1'b0);</span></span>
+<span id="L117"><span class="lineNum">     117</span>              : </span>
+<span id="L118"><span class="lineNum">     118</span>              :     uart_transmitter u_tx (</span>
+<span id="L119"><span class="lineNum">     119</span>              :         .clk(clk),</span>
+<span id="L120"><span class="lineNum">     120</span>              :         .rst(rst),</span>
+<span id="L121"><span class="lineNum">     121</span>              :         .tx_start(tx_start_pulse),</span>
+<span id="L122"><span class="lineNum">     122</span>              :         .oversample_tick(oversample_tick),</span>
+<span id="L123"><span class="lineNum">     123</span>              :         .tx_data(regfile_wr_data[8:0]),</span>
+<span id="L124"><span class="lineNum">     124</span>              :         .word_len_sel(lcr_val[2:0]),</span>
+<span id="L125"><span class="lineNum">     125</span>              :         .stop_bits_sel(lcr_val[4:3]),</span>
+<span id="L126"><span class="lineNum">     126</span>              :         .parity_sel(lcr_val[7:5]),</span>
+<span id="L127"><span class="lineNum">     127</span>              :         .break_ctrl(lcr_val[8]),</span>
+<span id="L128"><span class="lineNum">     128</span>              :         .oversample_factor(oversample_factor),</span>
+<span id="L129"><span class="lineNum">     129</span>              :         .tx(tx),</span>
+<span id="L130"><span class="lineNum">     130</span>              :         .tx_done(),</span>
+<span id="L131"><span class="lineNum">     131</span>              :         .tx_busy()</span>
+<span id="L132"><span class="lineNum">     132</span>              :     );</span>
+<span id="L133"><span class="lineNum">     133</span>              : </span>
+<span id="L134"><span class="lineNum">     134</span>              :     // ── 5. Instance: UART Serial Receiver (Rx) ─────────────</span>
+<span id="L135"><span class="lineNum">     135</span>              :     uart_receiver u_rx (</span>
+<span id="L136"><span class="lineNum">     136</span>              :         .clk(clk),</span>
+<span id="L137"><span class="lineNum">     137</span>              :         .rst(rst),</span>
+<span id="L138"><span class="lineNum">     138</span>              :         .oversample_tick(oversample_tick),</span>
+<span id="L139"><span class="lineNum">     139</span>              :         .rx(rx),</span>
+<span id="L140"><span class="lineNum">     140</span>              :         .word_len_sel(lcr_val[2:0]),</span>
+<span id="L141"><span class="lineNum">     141</span>              :         .stop_bits_sel(lcr_val[4:3]),</span>
+<span id="L142"><span class="lineNum">     142</span>              :         .parity_sel(lcr_val[7:5]),</span>
+<span id="L143"><span class="lineNum">     143</span>              :         .oversample_factor(oversample_factor),</span>
+<span id="L144"><span class="lineNum">     144</span>              :         .rx_data(),       </span>
+<span id="L145"><span class="lineNum">     145</span>              :         .rx_valid(),      </span>
+<span id="L146"><span class="lineNum">     146</span>              :         .rx_busy(),</span>
+<span id="L147"><span class="lineNum">     147</span>              :         .frame_error(),</span>
+<span id="L148"><span class="lineNum">     148</span>              :         .parity_error(),</span>
+<span id="L149"><span class="lineNum">     149</span>              :         .break_detect()</span>
+<span id="L150"><span class="lineNum">     150</span>              :     );</span>
+<span id="L151"><span class="lineNum">     151</span>              : </span>
+<span id="L152"><span class="lineNum">     152</span>              :     // ── DEDICATED FUNCTIONAL COVERAGE MONITOR REGISTERS ──────────────────</span>
+<span id="L153"><span class="lineNum">     153</span> <span class="tlaGNC">      374351 :     reg [20:0] fc_feature_manifest;</span></span>
+<span id="L154"><span class="lineNum">     154</span> <span class="tlaGNC">      374339 : </span></span>
+<span id="L155"><span class="lineNum">     155</span>              :     always @(posedge clk or posedge rst) begin</span>
+<span id="L156"><span class="lineNum">     156</span> <span class="tlaGNC">      320859 :         if (rst) begin</span></span>
+<span id="L157"><span class="lineNum">     157</span> <span class="tlaGNC">      338993 :             fc_feature_manifest &lt;= 21'b0;</span></span>
+<span id="L158"><span class="lineNum">     158</span> <span class="tlaGNC">      341189 :         end else begin</span></span>
+<span id="L159"><span class="lineNum">     159</span> <span class="tlaGNC">      297194 :             // 1. Word length states</span></span>
+<span id="L160"><span class="lineNum">     160</span> <span class="tlaGNC">      323201 :             if (lcr_val[2:0] == 3'b000) fc_feature_manifest[0]  &lt;= 1'b1; // cov_wl_5</span></span>
+<span id="L161"><span class="lineNum">     161</span>              :             if (lcr_val[2:0] == 3'b001) fc_feature_manifest[1]  &lt;= 1'b1; // cov_wl_6</span>
+<span id="L162"><span class="lineNum">     162</span>              :             if (lcr_val[2:0] == 3'b010) fc_feature_manifest[2]  &lt;= 1'b1; // cov_wl_7</span>
+<span id="L163"><span class="lineNum">     163</span> <span class="tlaGNC">      277083 :             if (lcr_val[2:0] == 3'b011) fc_feature_manifest[3]  &lt;= 1'b1; // cov_wl_8</span></span>
+<span id="L164"><span class="lineNum">     164</span> <span class="tlaGNC">      263985 :             if (lcr_val[2:0] == 3'b100) fc_feature_manifest[4]  &lt;= 1'b1; // cov_wl_9</span></span>
+<span id="L165"><span class="lineNum">     165</span> <span class="tlaGNC">      295629 : </span></span>
+<span id="L166"><span class="lineNum">     166</span>              :             // 2. Stop bit states</span>
+<span id="L167"><span class="lineNum">     167</span>              :             if (lcr_val[4:3] == 2'b00)  fc_feature_manifest[5]  &lt;= 1'b1; // cov_sb_1</span>
+<span id="L168"><span class="lineNum">     168</span> <span class="tlaGNC">      301620 :             if (lcr_val[4:3] == 2'b01)  fc_feature_manifest[6]  &lt;= 1'b1; // cov_sb_1p5</span></span>
+<span id="L169"><span class="lineNum">     169</span> <span class="tlaGNC">      329969 :             if (lcr_val[4:3] == 2'b10)  fc_feature_manifest[7]  &lt;= 1'b1; // cov_sb_2</span></span>
+<span id="L170"><span class="lineNum">     170</span> <span class="tlaGNC">      320945 : </span></span>
+<span id="L171"><span class="lineNum">     171</span> <span class="tlaGNC">      338933 :             // 3. Parity setup states</span></span>
+<span id="L172"><span class="lineNum">     172</span> <span class="tlaGNC">      338993 :             if (lcr_val[7:5] == 3'b000) fc_feature_manifest[8]  &lt;= 1'b1; // cov_par_none</span></span>
+<span id="L173"><span class="lineNum">     173</span>              :             if (lcr_val[7:5] == 3'b001) fc_feature_manifest[9]  &lt;= 1'b1; // cov_par_odd</span>
+<span id="L174"><span class="lineNum">     174</span>              :             if (lcr_val[7:5] == 3'b011) fc_feature_manifest[10] &lt;= 1'b1; // cov_par_even</span>
+<span id="L175"><span class="lineNum">     175</span> <span class="tlaGNC">      373836 :             if (lcr_val[7:5] == 3'b101) fc_feature_manifest[11] &lt;= 1'b1; // cov_par_mark</span></span>
+<span id="L176"><span class="lineNum">     176</span> <span class="tlaGNC">      365521 :             if (lcr_val[7:5] == 3'b111) fc_feature_manifest[12] &lt;= 1'b1; // cov_par_space</span></span>
+<span id="L177"><span class="lineNum">     177</span> <span class="tlaGNC">      369349 : </span></span>
+<span id="L178"><span class="lineNum">     178</span> <span class="tlaGNC">      326698 :             // 4. Protocol event states</span></span>
+<span id="L179"><span class="lineNum">     179</span>              :             if (u_tx.tx_busy &amp;&amp; lcr_val[8]) fc_feature_manifest[13] &lt;= 1'b1; // cov_tx_break</span>
+<span id="L180"><span class="lineNum">     180</span>              :             if (u_rx.frame_error == 1'b1)   fc_feature_manifest[14] &lt;= 1'b1; // cov_rx_frame_er</span>
+<span id="L181"><span class="lineNum">     181</span> <span class="tlaGNC">      372970 :             if (u_rx.parity_error == 1'b1)  fc_feature_manifest[15] &lt;= 1'b1; // cov_rx_par_er</span></span>
+<span id="L182"><span class="lineNum">     182</span> <span class="tlaGNC">      373080 :             if (u_rx.break_detect == 1'b1)  fc_feature_manifest[16] &lt;= 1'b1; // cov_rx_break_de</span></span>
+<span id="L183"><span class="lineNum">     183</span> <span class="tlaGNC">      370535 : </span></span>
+<span id="L184"><span class="lineNum">     184</span> <span class="tlaGNC">      367907 :             // 5. Oversample parameters</span></span>
+<span id="L185"><span class="lineNum">     185</span>              :             if (clk_val[3:2] == 2'b00)  fc_feature_manifest[17] &lt;= 1'b1; // cov_os_16x</span>
+<span id="L186"><span class="lineNum">     186</span>              :             if (clk_val[3:2] == 2'b01)  fc_feature_manifest[18] &lt;= 1'b1; // cov_os_8x</span>
+<span id="L187"><span class="lineNum">     187</span>              :             if (clk_val[3:2] == 2'b10)  fc_feature_manifest[19] &lt;= 1'b1; // cov_os_4x</span>
+<span id="L188"><span class="lineNum">     188</span>              :             if (clk_val[3:2] == 2'b11)  fc_feature_manifest[20] &lt;= 1'b1; // cov_os_3x</span>
+<span id="L189"><span class="lineNum">     189</span>              :         end</span>
+<span id="L190"><span class="lineNum">     190</span>              :     end</span>
+<span id="L191"><span class="lineNum">     191</span>              : </span>
+<span id="L192"><span class="lineNum">     192</span>              :     // Direct Verilator instrumentation target bindings</span>
+<span id="L193"><span class="lineNum">     193</span>              :     always @(posedge clk) begin</span>
+<span id="L194"><span class="lineNum">     194</span>              :         if (!rst) begin</span>
+<span id="L195"><span class="lineNum">     195</span>              :             if (fc_feature_manifest[0])  cov_wl_5:          cover(1);</span>
+<span id="L196"><span class="lineNum">     196</span>              :             if (fc_feature_manifest[1])  cov_wl_6:          cover(1);</span>
+<span id="L197"><span class="lineNum">     197</span>              :             if (fc_feature_manifest[2])  cov_wl_7:          cover(1);</span>
+<span id="L198"><span class="lineNum">     198</span>              :             if (fc_feature_manifest[3])  cov_wl_8:          cover(1);</span>
+<span id="L199"><span class="lineNum">     199</span>              :             if (fc_feature_manifest[4])  cov_wl_9:          cover(1);</span>
+<span id="L200"><span class="lineNum">     200</span>              :             if (fc_feature_manifest[5])  cov_sb_1:          cover(1);</span>
+<span id="L201"><span class="lineNum">     201</span>              :             if (fc_feature_manifest[6])  cov_sb_1p5:        cover(1);</span>
+<span id="L202"><span class="lineNum">     202</span>              :             if (fc_feature_manifest[7])  cov_sb_2:          cover(1);</span>
+<span id="L203"><span class="lineNum">     203</span>              :             if (fc_feature_manifest[8])  cov_par_none:      cover(1);</span>
+<span id="L204"><span class="lineNum">     204</span>              :             if (fc_feature_manifest[9])  cov_par_odd:       cover(1);</span>
+<span id="L205"><span class="lineNum">     205</span>              :             if (fc_feature_manifest[10]) cov_par_even:      cover(1);</span>
+<span id="L206"><span class="lineNum">     206</span>              :             if (fc_feature_manifest[11]) cov_par_mark:      cover(1);</span>
+<span id="L207"><span class="lineNum">     207</span>              :             if (fc_feature_manifest[12]) cov_par_space:     cover(1);</span>
+<span id="L208"><span class="lineNum">     208</span>              :             if (fc_feature_manifest[13]) cov_tx_break:      cover(1);</span>
+<span id="L209"><span class="lineNum">     209</span>              :             if (fc_feature_manifest[14]) cov_rx_frame_er:   cover(1);</span>
+<span id="L210"><span class="lineNum">     210</span>              :             if (fc_feature_manifest[15]) cov_rx_par_er:     cover(1);</span>
+<span id="L211"><span class="lineNum">     211</span>              :             if (fc_feature_manifest[16]) cov_rx_break_de:   cover(1);</span>
+<span id="L212"><span class="lineNum">     212</span>              :             if (fc_feature_manifest[17]) cov_os_16x:        cover(1);</span>
+<span id="L213"><span class="lineNum">     213</span>              :             if (fc_feature_manifest[18]) cov_os_8x:         cover(1);</span>
+<span id="L214"><span class="lineNum">     214</span>              :             if (fc_feature_manifest[19]) cov_os_4x:         cover(1);</span>
+<span id="L215"><span class="lineNum">     215</span>              :             if (fc_feature_manifest[20]) cov_os_3x:         cover(1);</span>
+<span id="L216"><span class="lineNum">     216</span>              :         end</span>
+<span id="L217"><span class="lineNum">     217</span>              :     end</span>
+<span id="L218"><span class="lineNum">     218</span>              : </span>
+<span id="L219"><span class="lineNum">     219</span>              : endmodule</span>
+        </pre>
+              </td>
+            </tr>
+          </table>
+          <br>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.0-1</a></td></tr>
+          </table>
+          <br>
+
+</body>
+</html>
