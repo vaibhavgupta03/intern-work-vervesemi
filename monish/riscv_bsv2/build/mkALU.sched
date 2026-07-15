@@ -1,0 +1,11 @@
+=== Generated schedule for mkALU ===
+
+Method schedule
+---------------
+Method: result
+Ready signal: True
+Conflict-free: result
+ 
+Logical execution order: result
+
+=====================================

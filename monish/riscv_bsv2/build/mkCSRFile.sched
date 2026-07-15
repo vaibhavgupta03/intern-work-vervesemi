@@ -1,0 +1,92 @@
+=== Generated schedule for mkCSRFile ===
+
+Method schedule
+---------------
+Method: csrRead
+Ready signal: True
+Conflict-free: csrRead, csrLegal, csrWrite, trap, mret, tick, dbgRead
+ 
+Method: csrLegal
+Ready signal: True
+Conflict-free: csrRead, csrLegal, csrWrite, trap, mret, tick, dbgRead
+ 
+Method: csrWrite
+Ready signal: True
+Conflict-free: csrRead, csrLegal, dbgRead
+Sequenced before (restricted): trap, mret
+Sequenced after (restricted): tick
+Conflicts: csrWrite
+ 
+Method: trap
+Ready signal: True
+Conflict-free: csrRead, csrLegal, tick, dbgRead
+Sequenced after (restricted): csrWrite
+Conflicts: trap, mret
+ 
+Method: mret
+Ready signal: True
+Conflict-free: csrRead, csrLegal, tick, dbgRead
+Sequenced after (restricted): csrWrite
+Conflicts: trap, mret
+ 
+Method: tick
+Ready signal: True
+Conflict-free: csrRead, csrLegal, trap, mret, dbgRead
+Sequenced before (restricted): csrWrite
+Conflicts: tick
+ 
+Method: dbgRead
+Ready signal: True
+Conflict-free: csrRead, csrLegal, csrWrite, trap, mret, tick, dbgRead
+ 
+Rule schedule
+-------------
+Rule: mstatus_canonicalize
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: mtvec_canonicalize
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: mepc_canonicalize
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: mcause_canonicalize
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: mtval_canonicalize
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: mscratch_canonicalize
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: mcycle_canonicalize
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: minstret_canonicalize
+Predicate: True
+Blocking rules: (none)
+ 
+Logical execution order: csrRead,
+			 csrLegal,
+			 tick,
+			 csrWrite,
+			 trap,
+			 mret,
+			 dbgRead,
+			 mstatus_canonicalize,
+			 mtvec_canonicalize,
+			 mepc_canonicalize,
+			 mcause_canonicalize,
+			 mtval_canonicalize,
+			 mscratch_canonicalize,
+			 mcycle_canonicalize,
+			 minstret_canonicalize
+
+=========================================

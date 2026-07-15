@@ -1,0 +1,95 @@
+=== Generated schedule for mkBramMem ===
+
+Method schedule
+---------------
+Method: slave_aw_put
+Ready signal: awf.i_notFull
+Conflict-free: slave_w_put,
+	       slave_b_get,
+	       slave_ar_put,
+	       slave_r_get,
+	       initWord,
+	       peekWord
+Conflicts: slave_aw_put
+ 
+Method: slave_w_put
+Ready signal: wf.i_notFull
+Conflict-free: slave_aw_put,
+	       slave_b_get,
+	       slave_ar_put,
+	       slave_r_get,
+	       initWord,
+	       peekWord
+Conflicts: slave_w_put
+ 
+Method: slave_b_get
+Ready signal: bf.i_notEmpty
+Conflict-free: slave_aw_put,
+	       slave_w_put,
+	       slave_ar_put,
+	       slave_r_get,
+	       initWord,
+	       peekWord
+Conflicts: slave_b_get
+ 
+Method: slave_ar_put
+Ready signal: arf.i_notFull
+Conflict-free: slave_aw_put,
+	       slave_w_put,
+	       slave_b_get,
+	       slave_r_get,
+	       initWord,
+	       peekWord
+Conflicts: slave_ar_put
+ 
+Method: slave_r_get
+Ready signal: rf.i_notEmpty
+Conflict-free: slave_aw_put,
+	       slave_w_put,
+	       slave_b_get,
+	       slave_ar_put,
+	       initWord,
+	       peekWord
+Conflicts: slave_r_get
+ 
+Method: initWord
+Ready signal: True
+Conflict-free: slave_aw_put,
+	       slave_w_put,
+	       slave_b_get,
+	       slave_ar_put,
+	       slave_r_get
+Sequenced after: peekWord
+Conflicts: initWord
+ 
+Method: peekWord
+Ready signal: True
+Conflict-free: slave_aw_put,
+	       slave_w_put,
+	       slave_b_get,
+	       slave_ar_put,
+	       slave_r_get,
+	       peekWord
+Sequenced before: initWord
+ 
+Rule schedule
+-------------
+Rule: do_write
+Predicate: awf.i_notEmpty && wf.i_notEmpty && bf.i_notFull
+Blocking rules: initWord
+ 
+Rule: do_read
+Predicate: arf.i_notEmpty && rf.i_notFull
+Blocking rules: (none)
+ 
+Logical execution order: slave_aw_put,
+			 slave_w_put,
+			 slave_b_get,
+			 slave_ar_put,
+			 slave_r_get,
+			 peekWord,
+			 do_read,
+			 initWord,
+			 do_write
+
+=========================================

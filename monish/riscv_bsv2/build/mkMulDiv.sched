@@ -1,0 +1,41 @@
+=== Generated schedule for mkMulDiv ===
+
+Method schedule
+---------------
+Method: start
+Ready signal: st == 2'd0
+Sequenced after: busy, done, result
+Conflicts: start
+ 
+Method: busy
+Ready signal: True
+Conflict-free: busy, done, result
+Sequenced before: start
+ 
+Method: done
+Ready signal: True
+Conflict-free: busy, done, result
+Sequenced before: start
+ 
+Method: result
+Ready signal: True
+Conflict-free: busy, done, result
+Sequenced before: start
+ 
+Rule schedule
+-------------
+Rule: mulStep
+Predicate: (st == 2'd1) && (! isDiv)
+Blocking rules: (none)
+ 
+Rule: divStep
+Predicate: (st == 2'd1) && isDiv
+Blocking rules: (none)
+ 
+Rule: finish
+Predicate: st == 2'd2
+Blocking rules: (none)
+ 
+Logical execution order: busy, done, result, start, mulStep, divStep, finish
+
+========================================

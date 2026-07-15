@@ -1,0 +1,19 @@
+==================================================================
+FUNCTIONAL       :   153/153   = 100.00%
+    axil_star_cov.sv                25/25    = 100.00%
+    tb_main.cpp                    128/128   = 100.00%
+code / branch    :   330/330   = 100.00%
+    axil_concentrator.sv             4/4     = 100.00%
+    axil_hub.sv                     38/38    = 100.00%
+    axil_periph_reg.sv             288/288   = 100.00%
+code / line      :   235/235   = 100.00%
+    axil_concentrator.sv             8/8     = 100.00%
+    axil_hub.sv                     35/35    = 100.00%
+    axil_periph_reg.sv             192/192   = 100.00%
+code / toggle    :  4746/4746  = 100.00%
+    axil_concentrator.sv           538/538   = 100.00%
+    axil_hub.sv                    830/830   = 100.00%
+    axil_periph_reg.sv            2640/2640  = 100.00%
+    axil_star_top.sv               738/738   = 100.00%
+==================================================================
+coverage goal (line & functional >= 99.0%): MET

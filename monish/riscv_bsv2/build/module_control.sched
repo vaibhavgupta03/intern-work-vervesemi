@@ -1,0 +1,11 @@
+=== Generated schedule for module_control ===
+
+Method schedule
+---------------
+Method: control
+Ready signal: True
+Conflict-free: control
+ 
+Logical execution order: control
+
+==============================================

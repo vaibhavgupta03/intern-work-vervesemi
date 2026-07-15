@@ -1,0 +1,11 @@
+=== Generated schedule for module_hazard ===
+
+Method schedule
+---------------
+Method: hazard
+Ready signal: True
+Conflict-free: hazard
+ 
+Logical execution order: hazard
+
+=============================================

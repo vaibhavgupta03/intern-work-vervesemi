@@ -1,0 +1,32 @@
+=== Generated schedule for mkProgramCounter ===
+
+Method schedule
+---------------
+Method: pc
+Ready signal: True
+Conflict-free: pc, advance, redirect, dbgSet
+ 
+Method: advance
+Ready signal: True
+Conflict-free: pc, redirect, dbgSet
+Conflicts: advance
+ 
+Method: redirect
+Ready signal: True
+Conflict-free: pc, advance, dbgSet
+Conflicts: redirect
+ 
+Method: dbgSet
+Ready signal: True
+Conflict-free: pc, advance, redirect
+Conflicts: dbgSet
+ 
+Rule schedule
+-------------
+Rule: r_canonicalize
+Predicate: True
+Blocking rules: (none)
+ 
+Logical execution order: pc, advance, redirect, dbgSet, r_canonicalize
+
+================================================

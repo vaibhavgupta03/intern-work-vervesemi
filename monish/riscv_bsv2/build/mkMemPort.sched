@@ -1,0 +1,79 @@
+=== Generated schedule for mkMemPort ===
+
+Method schedule
+---------------
+Method: req
+Ready signal: (! busy) && awf.i_notFull && wf.i_notFull && arf.i_notFull
+Conflict-free: resp, axi_aw_get, axi_w_get, axi_b_put, axi_ar_get, axi_r_put
+Sequenced after: canReq
+Conflicts: req
+ 
+Method: resp
+Ready signal: respF.i_notEmpty
+Conflict-free: req,
+	       canReq,
+	       axi_aw_get,
+	       axi_w_get,
+	       axi_b_put,
+	       axi_ar_get,
+	       axi_r_put
+Conflicts: resp
+ 
+Method: canReq
+Ready signal: True
+Conflict-free: resp,
+	       canReq,
+	       axi_aw_get,
+	       axi_w_get,
+	       axi_b_put,
+	       axi_ar_get,
+	       axi_r_put
+Sequenced before: req
+ 
+Method: axi_aw_get
+Ready signal: awf.i_notEmpty
+Conflict-free: req, resp, canReq, axi_w_get, axi_b_put, axi_ar_get, axi_r_put
+Conflicts: axi_aw_get
+ 
+Method: axi_w_get
+Ready signal: wf.i_notEmpty
+Conflict-free: req, resp, canReq, axi_aw_get, axi_b_put, axi_ar_get, axi_r_put
+Conflicts: axi_w_get
+ 
+Method: axi_b_put
+Ready signal: bf.i_notFull
+Conflict-free: req, resp, canReq, axi_aw_get, axi_w_get, axi_ar_get, axi_r_put
+Conflicts: axi_b_put
+ 
+Method: axi_ar_get
+Ready signal: arf.i_notEmpty
+Conflict-free: req, resp, canReq, axi_aw_get, axi_w_get, axi_b_put, axi_r_put
+Conflicts: axi_ar_get
+ 
+Method: axi_r_put
+Ready signal: rf.i_notFull
+Conflict-free: req, resp, canReq, axi_aw_get, axi_w_get, axi_b_put, axi_ar_get
+Conflicts: axi_r_put
+ 
+Rule schedule
+-------------
+Rule: collectR
+Predicate: rf.i_notEmpty && respF.i_notFull
+Blocking rules: (none)
+ 
+Rule: collectB
+Predicate: respF.i_notFull && bf.i_notEmpty
+Blocking rules: collectR
+ 
+Logical execution order: resp,
+			 canReq,
+			 req,
+			 axi_aw_get,
+			 axi_w_get,
+			 axi_b_put,
+			 axi_ar_get,
+			 axi_r_put,
+			 collectR,
+			 collectB
+
+=========================================
