@@ -1,0 +1,186 @@
+=== Generated schedule for mkSoC ===
+
+Method schedule
+---------------
+Method: debug_enqReq
+Ready signal: cdc_reqF.RDY_enq
+Conflict-free: debug_getResp,
+	       debug_respAvail,
+	       debug_coreHalted,
+	       initWord,
+	       peekWord,
+	       retired
+Conflicts: debug_enqReq
+ 
+Method: debug_getResp
+Ready signal: cdc_respF.RDY_deq && cdc_respF.RDY_first
+Conflict-free: debug_enqReq, debug_coreHalted, initWord, peekWord, retired
+Sequenced after: debug_respAvail
+Conflicts: debug_getResp
+ 
+Method: debug_respAvail
+Ready signal: True
+Conflict-free: debug_enqReq,
+	       debug_respAvail,
+	       debug_coreHalted,
+	       initWord,
+	       peekWord,
+	       retired
+Sequenced before: debug_getResp
+ 
+Method: debug_coreHalted
+Ready signal: True
+Conflict-free: debug_enqReq,
+	       debug_getResp,
+	       debug_respAvail,
+	       debug_coreHalted,
+	       initWord,
+	       peekWord,
+	       retired
+ 
+Method: initWord
+Ready signal: True
+Conflict-free: debug_enqReq,
+	       debug_getResp,
+	       debug_respAvail,
+	       debug_coreHalted,
+	       retired
+Sequenced after: peekWord
+Conflicts: initWord
+ 
+Method: peekWord
+Ready signal: True
+Conflict-free: debug_enqReq,
+	       debug_getResp,
+	       debug_respAvail,
+	       debug_coreHalted,
+	       peekWord,
+	       retired
+Sequenced before: initWord
+ 
+Method: retired
+Ready signal: True
+Conflict-free: debug_enqReq,
+	       debug_getResp,
+	       debug_respAvail,
+	       debug_coreHalted,
+	       initWord,
+	       peekWord,
+	       retired
+ 
+Rule schedule
+-------------
+Rule: dbg_pubHalt
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: dbg_doCmd
+Predicate: cdc_reqF.RDY_deq &&
+	   cdc_reqF.RDY_first &&
+	   ((cdc_reqF.first[71:69] == 3'd1)
+	    ? cdc_respF.RDY_enq
+	    : (((cdc_reqF.first[71:69] == 3'd2) ||
+		(cdc_reqF.first[71:69] == 3'd3) ||
+		((cdc_reqF.first[71:69] == 3'd4)
+		 ? cdc_respF.RDY_enq
+		 : ((cdc_reqF.first[71:69] == 3'd5) ||
+		    (cdc_reqF.first[71:69] == 3'd6) ||
+		    (cdc_reqF.first[71:69] == 3'd7) || cdc_respF.RDY_enq))) &&
+	       (((cdc_reqF.first[71:69] == 3'd2) ||
+		 (cdc_reqF.first[71:69] == 3'd3))
+		? cdc_respF.RDY_enq
+		: ((cdc_reqF.first[71:69] == 3'd4) ||
+		   ((cdc_reqF.first[71:69] == 3'd5)
+		    ? cdc_respF.RDY_enq
+		    : ((cdc_reqF.first[71:69] == 3'd6)
+		       ? dbg_dmem.RDY_req
+		       : ((! (cdc_reqF.first[71:69] == 3'd7)) ||
+			  dbg_dmem.RDY_req))))))) &&
+	   (! dbg_st) && cdc_reqF.notEmpty
+Blocking rules: (none)
+ 
+Rule: dbg_memDone
+Predicate: cdc_respF.RDY_enq && dbg_dmem.RDY_resp && dbg_st
+Blocking rules: (none)
+ 
+Rule: ar_imem
+Predicate: mem.RDY_slave_ar_put && core.RDY_imem_ar_get && (rdOwner == 2'd0)
+Blocking rules: (none)
+ 
+Rule: ar_dmem
+Predicate: mem.RDY_slave_ar_put && core.RDY_dmem_ar_get && (rdOwner == 2'd0)
+Blocking rules: ar_imem
+ 
+Rule: ar_dbg
+Predicate: mem.RDY_slave_ar_put && dbg_dmem.RDY_axi_ar_get &&
+	   (rdOwner == 2'd0)
+Blocking rules: ar_dmem, ar_imem
+ 
+Rule: r_resp
+Predicate: mem.RDY_slave_r_get &&
+	   ((rdOwner == 2'd1)
+	    ? core.RDY_imem_r_put
+	    : ((rdOwner == 2'd2)
+	       ? core.RDY_dmem_r_put
+	       : ((! (rdOwner == 2'd3)) || dbg_dmem.RDY_axi_r_put))) &&
+	   (! (rdOwner == 2'd0))
+Blocking rules: (none)
+ 
+Rule: aw_imem
+Predicate: mem.RDY_slave_aw_put && core.RDY_imem_aw_get && (wrOwner == 2'd0)
+Blocking rules: (none)
+ 
+Rule: aw_dmem
+Predicate: mem.RDY_slave_aw_put && core.RDY_dmem_aw_get && (wrOwner == 2'd0)
+Blocking rules: aw_imem
+ 
+Rule: aw_dbg
+Predicate: mem.RDY_slave_aw_put && dbg_dmem.RDY_axi_aw_get &&
+	   (wrOwner == 2'd0)
+Blocking rules: aw_dmem, aw_imem
+ 
+Rule: w_imem
+Predicate: mem.RDY_slave_w_put && core.RDY_imem_w_get && (wrOwner == 2'd1)
+Blocking rules: (none)
+ 
+Rule: w_dmem
+Predicate: mem.RDY_slave_w_put && core.RDY_dmem_w_get && (wrOwner == 2'd2)
+Blocking rules: (none)
+ 
+Rule: w_dbg
+Predicate: mem.RDY_slave_w_put && dbg_dmem.RDY_axi_w_get && (wrOwner == 2'd3)
+Blocking rules: (none)
+ 
+Rule: b_resp
+Predicate: mem.RDY_slave_b_get &&
+	   ((wrOwner == 2'd1)
+	    ? core.RDY_imem_b_put
+	    : ((wrOwner == 2'd2)
+	       ? core.RDY_dmem_b_put
+	       : ((! (wrOwner == 2'd3)) || dbg_dmem.RDY_axi_b_put))) &&
+	   (! (wrOwner == 2'd0))
+Blocking rules: (none)
+ 
+Logical execution order: debug_enqReq,
+			 debug_respAvail,
+			 debug_getResp,
+			 debug_coreHalted,
+			 peekWord,
+			 initWord,
+			 retired,
+			 ar_imem,
+			 ar_dmem,
+			 ar_dbg,
+			 r_resp,
+			 aw_imem,
+			 aw_dmem,
+			 aw_dbg,
+			 w_imem,
+			 w_dmem,
+			 w_dbg,
+			 b_resp,
+			 dbg_pubHalt,
+			 dbg_doCmd,
+			 dbg_memDone
+
+=====================================
